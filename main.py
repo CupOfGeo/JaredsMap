@@ -47,7 +47,8 @@ import plotly.graph_objects as go # or plotly.express as px
 
 
 import dash_bootstrap_components as dbc
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+#app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, suppress_callback_exceptions=True,external_stylesheets=[dbc.themes.LUX])
 app.layout = dbc.Container([dbc.Textarea(id='addys', value='',style={'width': '100%'}),
                        dbc.Button('Submit', id='submit'),
                        dcc.Graph(figure=fig,id='map'),])
@@ -98,4 +99,7 @@ def loc(click,value):
     )
     return fig
 
-app.run_server(debug=True, use_reloader=True)  # Turn off reloader if inside Jupyter
+app.run_server(debug=True)  # Turn off reloader if inside Jupyter
+
+server = app.server
+app.title='JaredsMapApp'
