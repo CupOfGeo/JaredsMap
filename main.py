@@ -7,6 +7,7 @@ from dash.exceptions import PreventUpdate
 from geopy.geocoders import Nominatim
 import time
 from pprint import pprint
+from app import server, app
 # instantiate a new Nominatim client
 geo = Nominatim(user_agent="tutorial")
 location = geo.geocode("56 East Rockaway rd. Hewlett, New York").raw
@@ -47,8 +48,8 @@ import plotly.graph_objects as go # or plotly.express as px
 
 
 import dash_bootstrap_components as dbc
-#app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
-app = dash.Dash(__name__, suppress_callback_exceptions=True,external_stylesheets=[dbc.themes.LUX])
+
+
 app.layout = dbc.Container([dbc.Textarea(id='addys', value='',style={'width': '100%'}),
                        dbc.Button('Submit', id='submit'),
                        dcc.Graph(figure=fig,id='map'),])
@@ -99,7 +100,5 @@ def loc(click,value):
     )
     return fig
 
-app.run_server(debug=True)  # Turn off reloader if inside Jupyter
-
-server = app.server
-app.title='JaredsMapApp'
+if __name__ == "__main__":
+    app.run_server(debug=True)  # Turn off reloader if inside Jupyter
