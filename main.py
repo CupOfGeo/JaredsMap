@@ -98,4 +98,4 @@ def loc(click,value):
     )
     return fig
 
-app.run_server(debug=True, use_reloader=True, host='0.0.0.0')  # Turn off reloader if inside Jupyter
+app.run_server(debug=True, use_reloader=True)  # Turn off reloader if inside Jupyter
