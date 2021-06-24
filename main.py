@@ -10,7 +10,7 @@ from pprint import pprint
 from app import server, app
 # instantiate a new Nominatim client
 geo = Nominatim(user_agent="tutorial")
-location = geo.geocode("56 East Rockaway rd. Hewlett, New York").raw
+location = geo.geocode("Hewlett, New York").raw
 # print raw data
 # pprint(location)
 
