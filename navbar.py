@@ -39,17 +39,19 @@ toast = html.Div(
     ]
 )
 
-#class="toast-body"
-single = dbc.Toast(
-            [],
-            #id="simple-toast",
-            header="This is the header",
-            # icon="primary",
-            dismissable=True,
-            is_open=True,
-            style={}
-        )
-many_toasts = [single for x in range(5)]
+single = dbc.Col(dbc.Row([html.Div("Grant Park",id='address_0'), dbc.Button('x')]))
+# #class="toast-body"
+# single = dbc.Toast(
+#             [],
+#             #id="simple-toast",
+#             header="This is the header",
+#             # icon="primary",
+#             dismissable=True,
+#             is_open=True,
+#             style={}
+#         )
+# many_toasts = [single for x in range(5)]
+# *many_toasts in a list
 
 #navbar = \
 app.layout = html.Div([dbc.Navbar(
@@ -64,16 +66,16 @@ app.layout = html.Div([dbc.Navbar(
     style={'height': '200px'}
 
 ),
-    toast, *many_toasts
+    single
 ])
 
 
-@app.callback(
-    Output("simple-toast", "is_open"),
-    [Input("simple-toast-toggle", "n_clicks")],
-)
-def open_toast(n):
-    return True
+# @app.callback(
+#     Output("simple-toast", "is_open"),
+#     [Input("simple-toast-toggle", "n_clicks")],
+# )
+# def open_toast(n):
+#     return True
 
 @app.callback(Output('address_input','value'),
               Input('submit', 'n_clicks'),

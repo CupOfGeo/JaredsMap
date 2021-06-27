@@ -8,6 +8,9 @@ from geopy.geocoders import Nominatim
 import time
 from pprint import pprint
 from app import server, app
+
+from nearest_neighbour import get_route
+
 # instantiate a new Nominatim client
 geo = Nominatim(user_agent="tutorial")
 location = geo.geocode("Hewlett, New York").raw
@@ -88,17 +91,33 @@ app.layout = html.Div([
               Input('submit','n_clicks'),
               State('addys','value'))
 def loc(click,value):
-    pprint(value)
+    base_url = 'https://www.google.com/maps/dir/'
     values = value.split('\n')
+
     lats = []
     lons = []
 
+    cord_to_add = {}
     if value == '':
         raise PreventUpdate
+    print(values)
     for value in values:
         location = geo.geocode(value).raw
         lats.append(location['lat'])
         lons.append(location['lon'])
+
+        cord_to_add[(float(location['lat']), float(location['lon']))] = value
+
+    # get an optimal route from nearest neighbour and then print the order of the route
+    route = get_route([float(x) for x in lats],[float(x) for x in lons])
+    url = ''
+    for loc in route:
+        key = (loc[0],loc[1])
+        url += "+".join(cord_to_add[key].split(' ')) + '/'
+
+    print(base_url + url)
+
+
 
     mean_lat = sum([float(x) for x in lats])/len(lats)
     mean_lon = sum([float(x) for x in lons])/len(lons)
