@@ -15,7 +15,7 @@ location = geo.geocode("Hewlett, New York").raw
 # pprint(location)
 
 mapbox_access_token = "pk.eyJ1IjoiY3Vwb2ZnZW8iLCJhIjoiY2txYjlxbGh1MDAxODJybDRqY3d5eHk2OCJ9.G1BxZ3CVKgW_p98xFrg1aQ"
-
+# TODO turn to navbar
 fig = go.Figure(go.Scattermapbox(
         lat=[location['lat']],
         lon=[location['lon']],
@@ -49,10 +49,40 @@ import plotly.graph_objects as go # or plotly.express as px
 
 import dash_bootstrap_components as dbc
 
+search_bar = dbc.Row(
+    [
+        dbc.Col(dbc.Input(type="search", placeholder="Search", size='500', style={'fontSize': '500%'})),
+        dbc.Col(
+            dbc.Button(
+                "Search", color="primary", className="ml-2", n_clicks=0, size='lg', style={'height':'123px'}
+            ),
+            width="auto",
+        ),
+    ],
+    no_gutters=True,
+    className="ml-auto flex-nowrap mt-3 mt-md-0",
+    align="center",
+)
 
-app.layout = dbc.Container([dbc.Textarea(id='addys', value='',style={'width': '100%'}),
+app.layout = html.Div([
+    dbc.Navbar(
+        [
+            dbc.Collapse(
+                search_bar, id="navbar-collapse", navbar=True, is_open=True
+            ),
+        ],
+        color="dark",
+        dark=True,
+        expand='lg',
+        style={'height': '200px'}
+
+    ),
+    dbc.Container([
+
+    dbc.Textarea(id='addys', value='',style={'width': '100%'}),
                        dbc.Button('Submit', id='submit'),
                        dcc.Graph(figure=fig,id='map'),])
+])
 
 @app.callback(Output('map','figure'),
               Input('submit','n_clicks'),
