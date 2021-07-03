@@ -148,7 +148,7 @@ def loc(click, value):
                 lon=mean_lon
             ),
             pitch=0,
-            zoom=13
+            zoom=10
         ),
 
     )
