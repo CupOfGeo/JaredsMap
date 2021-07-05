@@ -32,6 +32,7 @@ lis = ["Hewlett, NY", "Lynbrook, NY", "Long Beach, NY", 'Valley Stream, NY', "La
 def make_distance_matrix(lis):
     if len(lis) > 20:
         print('Too many locations')
+        return {}
     elif len(lis) > 10:
         big_dic = {}
         # quad 1
@@ -48,7 +49,7 @@ def make_distance_matrix(lis):
         big_dic = {}
         # quad 1
         big_dic = do_the_thing(lis, lis, big_dic)
-    print(len(big_dic))
+    # print(len(big_dic))
     return big_dic
 
 
@@ -66,6 +67,8 @@ import math
 
 
 def get_route(master_arr, list):
+    if master_arr == {}:
+        return []
     start = list[0]
 
     master_unvisited = list.copy()
@@ -113,19 +116,21 @@ def get_route(master_arr, list):
 
     s_idx = best_visited.index(start)
     out_route = best_visited[s_idx:] + best_visited[:s_idx]
+    out_route = out_route[::-1]
     #print(out_route, best_dist)
     # print(master_arr.items())
-    return best_visited
+    return out_route
 
 
 def one_shot_url(list_of_addys):
     big_dic = make_distance_matrix(list_of_addys)
     addy_list = get_route(big_dic, list_of_addys)
-    base_url = 'https://www.google.com/maps/dir/'
-    url = ''
-    for addy in addy_list:
-        url += "+".join(addy.split(' ')) + '/'
-    return base_url + url
+    return addy_list
+    # base_url = 'https://www.google.com/maps/dir/'
+    # url = ''
+    # for addy in addy_list:
+    #     url += "+".join(addy.split(' ')) + '/'
+    # return base_url + url
 
 
 #print(one_shot_url(lis))

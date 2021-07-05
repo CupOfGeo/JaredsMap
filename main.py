@@ -97,20 +97,27 @@ def loc(click, value):
         raise PreventUpdate
     # print(values)
     for value in values:
-        check = geo.geocode(value)
-        if check is not None:
-            location = check.raw
-            lats.append(location['lat'])
-            lons.append(location['lon'])
-
+        if value is not None:
+            check = geo.geocode(value)
+            if check is not None:
+                location = check.raw
+                lats.append(location['lat'])
+                lons.append(location['lon'])
         else:
             # wrong address
+            return '', f'{value} Address not found'
             print(value, 'address not found')
 
         cord_to_add[(float(location['lat']), float(location['lon']))] = value
 
     # get an optimal route from nearest neighbour and then print the order of the route
-    out = one_shot_url(values)
+    addy_list = one_shot_url(values)
+    base_url = 'https://www.google.com/maps/dir/'
+    url = ''
+    for addy in addy_list:
+        url += "+".join(addy.split(' ')) + '/'
+    url = base_url + url
+    out = html.A('click for google maps gps', href=url,)
 
     mean_lat = sum([float(x) for x in lats]) / len(lats)
     mean_lon = sum([float(x) for x in lons]) / len(lons)
