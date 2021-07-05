@@ -1,8 +1,11 @@
 import googlemaps
-from datetime import datetime
+import os
 
-with open('secret.txt', 'r') as file:
-    api_key = file.read()
+# Get environment variables
+api_key = os.getenv('GOOGLE_API')
+
+# with open('secret.txt', 'r') as file:
+#     api_key = file.read()
 
 gmaps = googlemaps.Client(key=api_key)
 
