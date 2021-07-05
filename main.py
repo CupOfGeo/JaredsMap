@@ -7,8 +7,7 @@ from dash.exceptions import PreventUpdate
 from geopy.geocoders import Nominatim
 
 from app import server, app
-
-from nearest_neighbour import get_route
+from google_directions_api import one_shot_url
 
 # instantiate a new Nominatim client
 geo = Nominatim(user_agent="tutorial")
@@ -111,18 +110,7 @@ def loc(click, value):
         cord_to_add[(float(location['lat']), float(location['lon']))] = value
 
     # get an optimal route from nearest neighbour and then print the order of the route
-    route = get_route([float(x) for x in lats], [float(x) for x in lons])
-    # print(route)
-    url = ''
-    out = ''
-    for loc in route:
-        key = (loc[0], loc[1])
-        url += "+".join(cord_to_add[key].split(' ')) + '/'
-        out += cord_to_add[key] + ' | '
-
-    out = out[:-1]
-
-    # print(base_url + url)
+    out = one_shot_url(values)
 
     mean_lat = sum([float(x) for x in lats]) / len(lats)
     mean_lon = sum([float(x) for x in lons]) / len(lons)

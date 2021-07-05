@@ -1,6 +1,5 @@
 import math
 
-
 def get_route(list_x, list_y):
     assert len(list_x) == len(list_y)
 
